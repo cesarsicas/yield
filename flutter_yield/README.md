@@ -1,16 +1,16 @@
 # flutter_yield
 
-A new Flutter application.
+## A new Flutter application.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# Yield calculator
 
-A few resources to get you started if this is your first Flutter project:
+  - This Flutter app will help to calculate the yield of some Brazilian Investments, like CDB Post and Pré fixed, National Treasure and so on.
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+Doing
+  - Basic Layout
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Next Steps
+  - Implement Screen Logic with Unit Tests
+  - Find some open api to get Taxes on real time (Selic, CDI and so on)
+

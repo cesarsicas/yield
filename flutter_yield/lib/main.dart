@@ -7,7 +7,7 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Calculate your income', home: YieldCalculator());
+    return MaterialApp(title: 'Calculate your income', home: YieldCalculator());
   }
 }
+
