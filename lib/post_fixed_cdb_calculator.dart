@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_yield/post_fixed_cdb_result.dart';
 
-class YieldCalculator extends StatelessWidget {
+class PostFixedCDBCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
