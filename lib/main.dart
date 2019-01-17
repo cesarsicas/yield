@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_yield/investment_option.dart';
+import 'package:flutter_yield/investment_option_model.dart';
 import 'package:flutter_yield/post_fixed_cdb_calculator.dart';
 
 void main() => runApp(Main());
@@ -29,12 +29,12 @@ class Main extends StatelessWidget {
     );
   }
 
-  List<InvestmentOption> getInvestmentTypes() {
-    List<InvestmentOption> list = List<InvestmentOption>();
-    list.add(InvestmentOption(0, "CDB Pós Fixado"));
-    list.add(InvestmentOption(1, "CDB Pré Fixado"));
-    list.add(InvestmentOption(2, "CDB Tesouro Direto"));
-    list.add(InvestmentOption(3, "LCI/LCA"));
+  List<InvestmentOptionModel> getInvestmentTypes() {
+    List<InvestmentOptionModel> list = List<InvestmentOptionModel>();
+    list.add(InvestmentOptionModel(0, "CDB Pós Fixado"));
+    list.add(InvestmentOptionModel(1, "CDB Pré Fixado"));
+    list.add(InvestmentOptionModel(2, "CDB Tesouro Direto"));
+    list.add(InvestmentOptionModel(3, "LCI/LCA"));
 
     return list;
   }
