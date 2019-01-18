@@ -1,6 +1,5 @@
 class InvestmentOptionModel {
   int id;
-
   String title;
 
   InvestmentOptionModel(int id, String title){
