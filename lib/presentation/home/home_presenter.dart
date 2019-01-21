@@ -1,4 +1,4 @@
-import 'package:flutter_yield/domain/home/investment_option_model.dart';
+import 'package:flutter_yield/data/home/investment_option_model.dart';
 
 class HomePresenter {
   List<InvestmentOptionModel> getInvestmentTypes() {

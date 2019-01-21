@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.of(context).pushNamed(route);
     } else {
       Scaffold.of(context).showSnackBar(new SnackBar(
-        content: new Text('Hello!'),
+        content: new Text('To do this someday!'),
       ));
     }
   }
