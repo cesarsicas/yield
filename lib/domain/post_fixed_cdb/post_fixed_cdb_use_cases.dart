@@ -3,9 +3,8 @@ import 'dart:math';
 class PostFixedCDBUseCases {
   PostFixedCDBUseCases();
 
-  double calculatePostFixedCDB(
-      double p, int t, double annualCdi, double offeredRate) {
-    final i = (offeredRate / 100.0) * annualCdi;
+  double calculatePostFixedCDB(double p, int t, double annualCdi, double offeredRate) {
+    final i = (offeredRate / 100.0) * (annualCdi/12.0);
 
     return _calculateCompoundRate(p, t, i / 100.0);
   }
