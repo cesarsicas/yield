@@ -1,3 +1,5 @@
+import 'package:flutter_yield/domain/post_fixed_cdb/model/post_fixed_cdb_calc.dart';
+import 'package:flutter_yield/domain/post_fixed_cdb/model/post_fixed_cdb_result.dart';
 import 'package:flutter_yield/domain/post_fixed_cdb/post_fixed_cdb_use_cases.dart';
 import 'package:flutter_yield/presentation/post_fixed_cdb/post_fixed_cdb_calculator_view.dart';
 
@@ -12,15 +14,20 @@ class PostFixedCDBCalculatorPresenter {
   calculatePostFixedCDB(
       String principal, String months, String actualCdi, String offeredTax) {
     try {
-      final result = useCase.calculatePostFixedCDB(
-          double.tryParse(principal),
-          int.tryParse(months),
-          double.tryParse(actualCdi),
-          double.tryParse(offeredTax));
 
-      view.onResult(result);
+      final postFixedCdbCalc =
+          PostFixedCdbCalc(stringToDouble(principal), int.tryParse(months), stringToDouble(actualCdi), stringToDouble(offeredTax));
+
+      final result = useCase.calculatePostFixedCDB(postFixedCdbCalc);
+
+      view.onResult(PostFixedCdbResult(postFixedCdbCalc, result));
+
     } catch (e) {
       view.showMessage("Ocorreu um erro");
     }
+  }
+
+  double stringToDouble(String str){
+    return double.tryParse(str.replaceAll(",", "."));
   }
 }

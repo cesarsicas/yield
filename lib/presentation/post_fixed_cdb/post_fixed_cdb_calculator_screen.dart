@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_yield/domain/post_fixed_cdb/model/post_fixed_cdb_result.dart';
 import 'package:flutter_yield/presentation/post_fixed_cdb/post_fixed_cdb_calculator_presenter.dart';
 import 'package:flutter_yield/presentation/post_fixed_cdb/post_fixed_cdb_calculator_view.dart';
 
@@ -16,9 +18,17 @@ class _PostFixedCDBCalculatorScreenState
   BuildContext context;
   PostFixedCDBCalculatorPresenter presenter;
   final mainValueEditController = TextEditingController();
+  final mainValueEditFocus = FocusNode();
+
   final timeEditController = TextEditingController();
+  final timeEditFocus = FocusNode();
+
   final actualCDIEditController = TextEditingController();
+  final actualCDIEditFocus = FocusNode();
+
   final offeredRateEditController = TextEditingController();
+  final offeredRateEditFocus = FocusNode();
+
   var resultValue = "R\$ 0,00";
 
   @override
@@ -39,27 +49,54 @@ class _PostFixedCDBCalculatorScreenState
                 child: new ListView(
                   children: <Widget>[
                     TextFormField(
-                      controller: actualCDIEditController,
-                      decoration:
-                          InputDecoration(labelText: 'CDI Atual (% / Ao ano)'),
-                      keyboardType: TextInputType.number,
-                    ),
+                        focusNode: actualCDIEditFocus,
+                        controller: actualCDIEditController,
+                        decoration: InputDecoration(
+                            labelText: 'CDI Atual (% / Ao ano)',
+                            hintText: '00,00'),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          BlacklistingTextInputFormatter(new RegExp('[\\.]')),
+                        ],
+                        onFieldSubmitted: (v) {
+                          FocusScope.of(context)
+                              .requestFocus(offeredRateEditFocus);
+                        }),
                     TextFormField(
-                      controller: offeredRateEditController,
-                      decoration:
-                          InputDecoration(labelText: 'Taxa oferecida CDI (%)'),
-                      keyboardType: TextInputType.number,
-                    ),
+                        focusNode: offeredRateEditFocus,
+                        controller: offeredRateEditController,
+                        decoration: InputDecoration(
+                            labelText: 'Taxa oferecida CDI (%)',
+                            hintText: '00,00'),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          BlacklistingTextInputFormatter(new RegExp('[\\.]')),
+                        ],
+                        onFieldSubmitted: (v) {
+                          FocusScope.of(context)
+                              .requestFocus(mainValueEditFocus);
+                        }),
                     TextFormField(
-                      controller: mainValueEditController,
-                      decoration: InputDecoration(
-                          labelText: 'Valor Aplicado (R\$ 0.0)'),
-                      keyboardType: TextInputType.number,
-                    ),
+                        focusNode: mainValueEditFocus,
+                        controller: mainValueEditController,
+                        decoration: InputDecoration(
+                            labelText: 'Valor Aplicado (R\$ 0.0)',
+                            hintText: '00,00'),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          BlacklistingTextInputFormatter(new RegExp('[\\.]')),
+                        ],
+                        onFieldSubmitted: (v) {
+                          FocusScope.of(context).requestFocus(timeEditFocus);
+                        }),
                     TextFormField(
+                      focusNode: timeEditFocus,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
                       controller: timeEditController,
                       decoration: InputDecoration(labelText: 'Prazo (meses)'),
-                      keyboardType: TextInputType.number,
                     ),
                     Center(
                       child: Padding(
@@ -100,9 +137,9 @@ class _PostFixedCDBCalculatorScreenState
   }
 
   @override
-  void onResult(double result) {
+  void onResult(PostFixedCdbResult result) {
     setState(() {
-      resultValue = "R\$ $result";
+      resultValue = "R\$ ${result.result}";
     });
   }
 
