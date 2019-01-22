@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_yield/domain/post_fixed_cdb/model/post_fixed_cdb_result.dart';
 import 'package:flutter_yield/presentation/post_fixed_cdb/post_fixed_cdb_calculator_presenter.dart';
 import 'package:flutter_yield/presentation/post_fixed_cdb/post_fixed_cdb_calculator_view.dart';
+import 'package:flutter_yield/presentation/post_fixed_cdb/result/post_fixed_cdb_result_screen.dart';
 
 class PostFixedCDBCalculatorScreen extends StatefulWidget {
   @override
@@ -36,6 +37,11 @@ class _PostFixedCDBCalculatorScreenState
     final Size screenSize = MediaQuery.of(context).size;
     this.context = context;
     this.presenter = PostFixedCDBCalculatorPresenter(this);
+
+    mainValueEditController.text = "5000";
+    timeEditController.text = "24";
+    actualCDIEditController.text = "7";
+    offeredRateEditController.text = "100";
 
     return Scaffold(
         appBar: AppBar(
@@ -138,9 +144,10 @@ class _PostFixedCDBCalculatorScreenState
 
   @override
   void onResult(PostFixedCdbResult result) {
-    setState(() {
-      resultValue = "R\$ ${result.result}";
-    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PostFixedCdbResultScreen(result)),
+    );
   }
 
   @override
