@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_yield/domain/post_fixed_cdb/model/post_fixed_cdb_result.dart';
 
 class PostFixedCdbResultScreen extends StatelessWidget {
-  PostFixedCdbResult result;
+  PostFixedCdbResult finalResult;
 
   PostFixedCdbResultScreen(PostFixedCdbResult result) {
-    this.result = result;
+    this.finalResult = result;
   }
 
   @override
@@ -25,33 +25,29 @@ class PostFixedCdbResultScreen extends StatelessWidget {
     );
   }
 
-  List<charts.Series<TimeSeriesSales, DateTime>> generateChartData() {
+  List<charts.Series<TimeSeries, DateTime>> generateChartData() {
     final data = [
-      new TimeSeriesSales(DateTime.now(), this.result.calc.startValue.toInt()),
-      new TimeSeriesSales(
+      new TimeSeries(DateTime.now(), this.finalResult.calc.startValue),
+      new TimeSeries(
           DateTime.now()
-              .add(new Duration(days: this.result.calc.timeInMonths * 30)),
-          this.result.result.toInt()),
+              .add(new Duration(days: this.finalResult.calc.timeInMonths * 30)),
+          this.finalResult.result),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Sales',
+      new charts.Series<TimeSeries, DateTime>(
+        id: 'Yield',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (TimeSeries series, _) => series.period,
+        measureFn: (TimeSeries series, _) => series.yield,
         data: data,
       )
     ];
   }
-
 }
+class TimeSeries {
+  final DateTime period;
+  final double yield;
 
-/// Sample time series data type.class
-
-class TimeSeriesSales {
-  final DateTime time;
-  final int sales;
-
-  TimeSeriesSales(this.time, this.sales);
+  TimeSeries(this.period, this.yield);
 }
