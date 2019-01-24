@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final items = presenter.getInvestmentTypes();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Choose an Investment Type"),
+        title: Text("Choose an option"),
       ),
       body: ListView.builder(
         itemCount: items.length,

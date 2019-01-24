@@ -8,6 +8,7 @@ class HomePresenter {
     list.add(InvestmentOptionModel("", "CDB Pré Fixado"));
     list.add(InvestmentOptionModel("", "CDB Tesouro Direto"));
     list.add(InvestmentOptionModel("", "LCI/LCA"));
+    list.add(InvestmentOptionModel("/check_taxes", "Check Today's Selic and CDI "));
 
     return list;
   }
