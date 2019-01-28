@@ -12,5 +12,4 @@ class PostFixedCdbCalc{
       this.annualCdi = annualCdi;
       this.rateOfReturn = rateOfReturn;
   }
-
 }
