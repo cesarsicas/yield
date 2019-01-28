@@ -13,6 +13,7 @@ class _CheckTaxesScreenState extends State<CheckTaxesScreen>
   CheckTaxesPresenter presenter;
   var selicValue = "0.0";
   var selicDate = "00/00/00";
+  var selicOneYear = "0.0";
 
   void initState() {
     super.initState();
@@ -33,14 +34,21 @@ class _CheckTaxesScreenState extends State<CheckTaxesScreen>
           children: <Widget>[
             Row(
               children: <Widget>[
-                Text("Última Selic Acumulada: ", style: TextStyle(fontWeight: FontWeight.bold),),
+                Text("Selic Acumulada do mês: ", style: TextStyle(fontWeight: FontWeight.bold),),
                 Text(selicValue)
               ],
             ),
             Row(
               children: <Widget>[
-                Text("Data Selic Acumulada: ",  style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Data Selic acumulada: ",  style: TextStyle(fontWeight: FontWeight.bold)),
                 Text(selicDate)
+              ],
+            ),
+
+            Row(
+              children: <Widget>[
+                Text("Selic Acumulada (1 ano): ",  style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(selicOneYear)
               ],
             )
           ],
@@ -50,10 +58,11 @@ class _CheckTaxesScreenState extends State<CheckTaxesScreen>
   }
 
   @override
-  setSelicValue(SelicAccumulated selic) {
+  setSelicValue(SelicAccumulated selic, double selicOneYearAccummulated) {
     setState(() {
       selicValue = selic.value;
       selicDate = selic.date;
+      selicOneYear = selicOneYearAccummulated.toStringAsPrecision(2);
     });
   }
 }

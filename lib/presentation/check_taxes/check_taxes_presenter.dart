@@ -1,38 +1,35 @@
-import 'dart:convert';
-
+import 'package:flutter_yield/data/check_taxes/CheckTaxesRepositoryImpl.dart';
+import 'package:flutter_yield/domain/check_taxes/CheckTaxesRepository.dart';
 import 'package:flutter_yield/domain/check_taxes/model/selic_accumulated.dart';
 import 'package:flutter_yield/presentation/check_taxes/check_taxes_view.dart';
-import 'package:http/http.dart' as http;
 
 class CheckTaxesPresenter {
   CheckTaxesView view;
+  CheckTaxesRepository repository;
 
   CheckTaxesPresenter(CheckTaxesView view) {
     this.view = view;
+    this.repository = CheckTaxesRepositoryImpl();
   }
 
-  getTaxes(){
+  getTaxes() {
     getSelic();
-
   }
 
-  getSelic()  async{
-    var url =
-        "http://api.bcb.gov.br/dados/serie/bcdata.sgs.4390/dados?formato=json";
+  getSelic() {
+    double selicOneYear = 0.0;
+    List<SelicAccumulated> newList;
 
-    http.get(url).then((response) {
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
+    repository.getSelic().then((list) {
+      if (list.length >= 12) {
+        newList = list.sublist(list.length - 13, list.length - 1);
 
-      var jsonValue = jsonDecode(response.body);
-
-      var list = (jsonValue as List)
-          ?.map((e) => e == null
-              ? null
-              : SelicAccumulated.fromJson(e as Map<String, dynamic>))
-          ?.toList();
-
-      view?.setSelicValue(list.last);
+        newList.forEach((item) {
+          var value = double.parse(item.value);
+          selicOneYear += value;
+        });
+      }
+      view.setSelicValue(list.last, selicOneYear);
     });
   }
 }
