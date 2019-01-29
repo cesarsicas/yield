@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_yield/domain/check_taxes/model/selic_accumulated.dart';
 import 'package:flutter_yield/presentation/check_taxes/check_taxes_presenter.dart';
 import 'package:flutter_yield/presentation/check_taxes/check_taxes_view.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class CheckTaxesScreen extends StatefulWidget {
   @override
@@ -14,11 +15,11 @@ class _CheckTaxesScreenState extends State<CheckTaxesScreen>
   var selicValue = "0.0";
   var selicDate = "00/00/00";
   var selicOneYear = "0.0";
+  var showLoading = true;
 
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => presenter.getSelic());
-
     presenter = CheckTaxesPresenter(this);
   }
 
@@ -28,32 +29,38 @@ class _CheckTaxesScreenState extends State<CheckTaxesScreen>
       appBar: AppBar(
         title: Text("Taxas atuais"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Row(
+      body: ModalProgressHUD(
+          inAsyncCall: showLoading,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               children: <Widget>[
-                Text("Selic Acumulada do mês: ", style: TextStyle(fontWeight: FontWeight.bold),),
-                Text(selicValue)
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "Selic Acumulada do mês: ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(selicValue)
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text("Data Selic acumulada: ",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(selicDate)
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text("Selic Acumulada (1 ano): ",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(selicOneYear)
+                  ],
+                )
               ],
             ),
-            Row(
-              children: <Widget>[
-                Text("Data Selic acumulada: ",  style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(selicDate)
-              ],
-            ),
-
-            Row(
-              children: <Widget>[
-                Text("Selic Acumulada (1 ano): ",  style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(selicOneYear)
-              ],
-            )
-          ],
-        ),
-      ),
+          )),
     );
   }
 
@@ -63,6 +70,7 @@ class _CheckTaxesScreenState extends State<CheckTaxesScreen>
       selicValue = selic.value;
       selicDate = selic.date;
       selicOneYear = selicOneYearAccummulated.toStringAsPrecision(2);
+      showLoading = false;
     });
   }
 }
